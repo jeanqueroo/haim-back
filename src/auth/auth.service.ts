@@ -9,10 +9,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(email: string, password: string) {
-    const user = await this.usersService.create(email, password);
-    return { id: user.id, email: user.email };
-  }
+
 
  async login(email: string, password: string) {
   const user = await this.usersService.validateUser(email, password);
