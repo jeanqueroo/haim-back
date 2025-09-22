@@ -15,12 +15,12 @@ export class UsersService {
   async createFull(payload: {
     email: string;
     password: string;
-    name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     address: string;
     country: string;
     age: number;
-    role: string[];
+    roles: string[];
     gender: string;
   }): Promise<User> {
     console.log(payload);
@@ -28,12 +28,12 @@ export class UsersService {
     const user = this.usersRepository.create({
       email: payload.email,
       password: hashed,
-      name: payload.name,
-      last_name: payload.last_name,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
       address: payload.address,
       country: payload.country,
       age: payload.age,
-      role: payload.role,
+      roles: payload.roles,
       gender: payload.gender,
     });
     return this.usersRepository.save(user);

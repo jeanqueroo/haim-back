@@ -2,12 +2,12 @@ export class User {
   id: number;
   email: string;
   password: string; // hashed
-  name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   address: string;
   country: string;
   age: number;
-  role: string[];
+  roles: string[];
   gender: string;
 
 

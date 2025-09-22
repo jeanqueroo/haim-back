@@ -8,12 +8,12 @@ function mapEntityToModel(entity: UserEntity): UserModel {
   model.id = entity.id;
   model.email = entity.email;
   model.password = entity.password;
-  model.name = entity.name;
-  model.last_name = entity.last_name;
+  model.firstName = entity.firstName;
+  model.lastName = entity.lastName;
   model.address = entity.address;
   model.country = entity.country;
   model.age = entity.age as unknown as number;
-  model.role = entity.role as unknown as string[];
+  model.roles = entity.roles as unknown as string[];
   model.gender = entity.gender;
   return model;
 }
@@ -26,12 +26,12 @@ export class UsersController {
   async create(@Body() body: {
     email: string;
     password: string;
-    name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     address: string;
     country: string;
     age: number;
-    role: string[];
+    roles: string[];
     gender: string;
   }): Promise<UserModel> {
     const user = await this.usersService.createFull(body);

@@ -18,10 +18,10 @@ export class User {
   password: string; // hashed
 
   @Column()
-  name: string;
+  firstName: string;
 
   @Column()
-  last_name: string;
+  lastName: string;
   
   @Column()
   address: string;
@@ -37,7 +37,7 @@ export class User {
     enum: UserRole,
     array: true,   // 👈 enum[]
   })
-  role: string[];
+  roles: string[];
   
   @Column()
   gender: string;
