@@ -6,8 +6,8 @@ export enum UserRole {
   VENDEDOR = 'vendedor',
 }
 
-@Entity()
-export class User {
+@Entity("users")
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,6 +41,4 @@ export class User {
   
   @Column()
   gender: string;
-
-
 }
