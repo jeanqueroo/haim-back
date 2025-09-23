@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { InfrastructureModule } from './infrastructure/infrastructure.module';
+import { ApplicationModule } from './application/application.module';
+import { PresentationModule } from './presentation/presentation.module';
 import { ProtectedController } from './protected/protected.controller';
 
 @Module({
@@ -12,17 +13,18 @@ import { ProtectedController } from './protected/protected.controller';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: 'db',
+        host: 'localhost',
         port: parseInt(process.env.DB_PORT as string),
         username: process.env.DB_USER as string,
         password: process.env.DB_PASSWORD as string,
         database: process.env.DB_NAME as string,
-        autoLoadEntities: true,
+        entities: [__dirname + '/infrastructure/database/entities/*.entity{.ts,.js}'],
         synchronize: true, // ⚠️ solo en desarrollo
       }),
     }),
-    UsersModule,
-    AuthModule,
+    InfrastructureModule,
+    ApplicationModule,
+    PresentationModule,
   ],
   controllers: [ProtectedController],
 })
