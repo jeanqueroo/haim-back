@@ -7,6 +7,10 @@ import { UpdateUserUseCase } from './use-cases/user/update-user.use-case';
 import { DeleteUserUseCase } from './use-cases/user/delete-user.use-case';
 import { LoginUseCase } from './use-cases/auth/login.use-case';
 import { RefreshTokenUseCase } from './use-cases/auth/refresh-token.use-case';
+import { CreateStoreUseCase } from './use-cases/store/create-store.use-case';
+import { GetStoreUseCase, GetStoresByUserIdUseCase, GetAllStoresUseCase } from './use-cases/store/get-store.use-case';
+import { UpdateStoreUseCase } from './use-cases/store/update-store.use-case';
+import { DeleteStoreUseCase } from './use-cases/store/delete-store.use-case';
 
 @Module({
   imports: [
@@ -28,6 +32,14 @@ import { RefreshTokenUseCase } from './use-cases/auth/refresh-token.use-case';
     // Auth Use Cases
     LoginUseCase,
     RefreshTokenUseCase,
+    
+    // Store Use Cases
+    CreateStoreUseCase,
+    GetStoreUseCase,
+    GetStoresByUserIdUseCase,
+    GetAllStoresUseCase,
+    UpdateStoreUseCase,
+    DeleteStoreUseCase,
   ],
   exports: [
     CreateUserUseCase,
@@ -38,6 +50,12 @@ import { RefreshTokenUseCase } from './use-cases/auth/refresh-token.use-case';
     DeleteUserUseCase,
     LoginUseCase,
     RefreshTokenUseCase,
+    CreateStoreUseCase,
+    GetStoreUseCase,
+    GetStoresByUserIdUseCase,
+    GetAllStoresUseCase,
+    UpdateStoreUseCase,
+    DeleteStoreUseCase,
   ],
 })
 export class ApplicationModule {}

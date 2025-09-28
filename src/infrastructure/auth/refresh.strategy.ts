@@ -20,3 +20,4 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
     };
   }
 }
+
