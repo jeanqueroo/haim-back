@@ -26,6 +26,14 @@ export class TypeOrmStoreRepository implements StoreRepository {
     return storeEntities.map(entity => this.toDomain(entity));
   }
 
+  async findByName(name: string): Promise<Store[]> {
+    const storeEntities = await this.storeRepository
+      .createQueryBuilder('store')
+      .where('store.name ILIKE :name', { name: `%${name}%` })
+      .getMany();
+    return storeEntities.map(entity => this.toDomain(entity));
+  }
+
   async findAll(): Promise<Store[]> {
     const storeEntities = await this.storeRepository.find();
     return storeEntities.map(entity => this.toDomain(entity));

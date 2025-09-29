@@ -195,3 +195,4 @@ Cada tienda está relacionada con un usuario a través del campo `userId`, que r
 - Un usuario puede tener múltiples tiendas
 - Filtrar tiendas por usuario
 - Mantener la integridad referencial
+

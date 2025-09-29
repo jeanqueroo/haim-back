@@ -28,3 +28,12 @@ export class GetAllStoresUseCase {
     return await this.storeRepository.findAll();
   }
 }
+
+@Injectable()
+export class GetStoresByNameUseCase {
+  constructor(@Inject('StoreRepository') private readonly storeRepository: StoreRepository) {}
+
+  async execute(name: string): Promise<Store[]> {
+    return await this.storeRepository.findByName(name);
+  }
+}

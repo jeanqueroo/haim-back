@@ -26,3 +26,4 @@ export class CreateStoreRequestDto {
   @IsNotEmpty()
   userId: number;
 }
+

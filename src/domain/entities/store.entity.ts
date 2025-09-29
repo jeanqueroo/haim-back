@@ -22,6 +22,8 @@ export class Store {
     public readonly country: string,
     public readonly phone: string,
     public readonly userId: number,
+    public readonly primaryUserId?: number,
+    public readonly associatedUsers?: number[],
   ) {}
 
   static create(data: {
@@ -32,6 +34,8 @@ export class Store {
     country: string;
     phone: string;
     userId: number;
+    primaryUserId?: number;
+    associatedUsers?: number[];
   }): Store {
     return new Store(
       data.id,
@@ -41,6 +45,8 @@ export class Store {
       data.country,
       data.phone,
       data.userId,
+      data.primaryUserId,
+      data.associatedUsers,
     );
   }
 
@@ -53,6 +59,8 @@ export class Store {
       country: this.country,
       phone: this.phone,
       userId: this.userId,
+      primaryUserId: this.primaryUserId,
+      associatedUsers: this.associatedUsers,
     };
   }
 }

@@ -26,3 +26,4 @@ export class UpdateStoreRequestDto {
   @IsOptional()
   userId?: number;
 }
+
