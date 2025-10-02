@@ -7,14 +7,18 @@ import { GetStoreUseCase, GetStoresByUserIdUseCase, GetAllStoresUseCase, GetStor
 import { UpdateStoreUseCase } from '../../application/use-cases/store/update-store.use-case';
 import { DeleteStoreUseCase } from '../../application/use-cases/store/delete-store.use-case';
 import { AddUserToStoreUseCase } from '../../application/use-cases/store-user/add-user-to-store.use-case';
+import { BulkAddUsersToStoreUseCase } from '../../application/use-cases/store-user/bulk-add-users-to-store.use-case';
 import { GetStoreUsersUseCase, GetUserStoresUseCase, GetPrimaryUserByStoreUseCase } from '../../application/use-cases/store-user/get-store-users.use-case';
+import { GetStoreUsersWithInfoUseCase } from '../../application/use-cases/store-user/get-store-users-with-info.use-case';
 import { RemoveUserFromStoreUseCase, SetPrimaryUserUseCase } from '../../application/use-cases/store-user/remove-user-from-store.use-case';
 import { CreateStoreRequestDto } from '../dtos/create-store-request.dto';
 import { UpdateStoreRequestDto } from '../dtos/update-store-request.dto';
 import { AddUserToStoreRequestDto } from '../dtos/add-user-to-store-request.dto';
+import { BulkAddUsersToStoreRequestDto } from '../dtos/bulk-add-users-to-store-request.dto';
 import { CreateStoreDto } from '../../application/dtos/create-store.dto';
 import { UpdateStoreDto } from '../../application/dtos/update-store.dto';
 import { AddUserToStoreDto } from '../../application/dtos/add-user-to-store.dto';
+import { BulkAddUsersToStoreDto } from '../../application/dtos/bulk-add-users-to-store.dto';
 
 @Controller('stores')
 export class StoreController {
@@ -27,7 +31,9 @@ export class StoreController {
     private readonly updateStoreUseCase: UpdateStoreUseCase,
     private readonly deleteStoreUseCase: DeleteStoreUseCase,
     private readonly addUserToStoreUseCase: AddUserToStoreUseCase,
+    private readonly bulkAddUsersToStoreUseCase: BulkAddUsersToStoreUseCase,
     private readonly getStoreUsersUseCase: GetStoreUsersUseCase,
+    private readonly getStoreUsersWithInfoUseCase: GetStoreUsersWithInfoUseCase,
     private readonly getUserStoresUseCase: GetUserStoresUseCase,
     private readonly getPrimaryUserByStoreUseCase: GetPrimaryUserByStoreUseCase,
     private readonly removeUserFromStoreUseCase: RemoveUserFromStoreUseCase,
@@ -141,11 +147,38 @@ export class StoreController {
     return storeUser.toPublic();
   }
 
+  @Post(':id/users/bulk')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('admin', 'user')
+  async bulkAddUsersToStore(
+    @Param('id', ParseIntPipe) storeId: number,
+    @Body() bulkAddUsersToStoreRequestDto: BulkAddUsersToStoreRequestDto,
+  ) {
+    const users = bulkAddUsersToStoreRequestDto.users.map(user => 
+      new AddUserToStoreDto(user.userId, user.isPrimary)
+    );
+    
+    const bulkAddUsersToStoreDto = new BulkAddUsersToStoreDto(users);
+    const storeUsers = await this.bulkAddUsersToStoreUseCase.execute(storeId, bulkAddUsersToStoreDto);
+    
+    return {
+      message: `${storeUsers.length} usuarios agregados exitosamente a la tienda`,
+      users: storeUsers.map(storeUser => storeUser.toPublic())
+    };
+  }
+
   @Get(':id/users')
   @UseGuards(AuthGuard('jwt'))
   async getStoreUsers(@Param('id', ParseIntPipe) storeId: number) {
     const storeUsers = await this.getStoreUsersUseCase.execute(storeId);
     return storeUsers.map(storeUser => storeUser.toPublic());
+  }
+
+  @Get(':id/users/with-info')
+  @UseGuards(AuthGuard('jwt'))
+  async getStoreUsersWithInfo(@Param('id', ParseIntPipe) storeId: number) {
+    const storeUsersWithInfo = await this.getStoreUsersWithInfoUseCase.execute(storeId);
+    return storeUsersWithInfo.map(storeUserWithInfo => storeUserWithInfo.toPublic());
   }
 
   @Get('user/:userId/stores')

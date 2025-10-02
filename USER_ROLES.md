@@ -188,3 +188,4 @@ curl -X PUT http://localhost:3000/tables/1 \
 curl -X GET "http://localhost:3000/tables?storeId=1&status=free" \
   -H "Authorization: Bearer <waiter-jwt-token>"
 ```
+

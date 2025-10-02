@@ -61,11 +61,13 @@ export class TypeOrmTableRepository implements TableRepository {
       return null;
     }
 
-    const updatedEntity = await this.tableRepository.save({
+    // Merge the partial update data with the existing entity
+    const updatedData = {
       ...existingEntity,
-      ...this.toEntity(table as Table),
-    });
+      ...table,
+    };
 
+    const updatedEntity = await this.tableRepository.save(updatedData);
     return this.toDomain(updatedEntity);
   }
 

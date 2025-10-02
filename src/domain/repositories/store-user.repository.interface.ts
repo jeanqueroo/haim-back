@@ -6,7 +6,9 @@ export interface StoreUserRepository {
   findByUserId(userId: number): Promise<StoreUser[]>;
   findByStoreIdAndUserId(storeId: number, userId: number): Promise<StoreUser | null>;
   findPrimaryUserByStoreId(storeId: number): Promise<StoreUser | null>;
+  findByStoreIdWithUserInfo(storeId: number): Promise<Array<{ storeUser: StoreUser; user: any }>>;
   create(storeUser: Omit<StoreUser, 'id'>): Promise<StoreUser>;
+  createBulk(storeUsers: Omit<StoreUser, 'id'>[]): Promise<StoreUser[]>;
   update(id: number, storeUser: Partial<Omit<StoreUser, 'id'>>): Promise<StoreUser | null>;
   delete(id: number): Promise<boolean>;
   setPrimaryUser(storeId: number, userId: number): Promise<StoreUser | null>;

@@ -29,6 +29,19 @@ export class TypeOrmStoreUserRepository implements StoreUserRepository {
     return storeUserEntities.map(entity => this.toDomain(entity));
   }
 
+  async findByStoreIdWithUserInfo(storeId: number): Promise<Array<{ storeUser: StoreUser; user: any }>> {
+    const storeUserEntities = await this.storeUserRepository.find({ 
+      where: { storeId },
+      relations: ['user'],
+      order: { isPrimary: 'DESC', joinedAt: 'ASC' }
+    });
+    
+    return storeUserEntities.map(entity => ({
+      storeUser: this.toDomain(entity),
+      user: entity.user
+    }));
+  }
+
   async findByUserId(userId: number): Promise<StoreUser[]> {
     const storeUserEntities = await this.storeUserRepository.find({ 
       where: { userId },
@@ -61,6 +74,12 @@ export class TypeOrmStoreUserRepository implements StoreUserRepository {
     const storeUserEntity = this.toEntity(storeUser as StoreUser);
     const savedEntity = await this.storeUserRepository.save(storeUserEntity);
     return this.toDomain(savedEntity);
+  }
+
+  async createBulk(storeUsers: Omit<StoreUser, 'id'>[]): Promise<StoreUser[]> {
+    const storeUserEntities = storeUsers.map(storeUser => this.toEntity(storeUser as StoreUser));
+    const savedEntities = await this.storeUserRepository.save(storeUserEntities);
+    return savedEntities.map(entity => this.toDomain(entity));
   }
 
   async update(id: number, storeUser: Partial<Omit<StoreUser, 'id'>>): Promise<StoreUser | null> {

@@ -16,7 +16,9 @@ import { GetTableUseCase, GetAllTablesUseCase, GetTablesByStatusUseCase, GetTabl
 import { UpdateTableUseCase } from './use-cases/table/update-table.use-case';
 import { DeleteTableUseCase } from './use-cases/table/delete-table.use-case';
 import { AddUserToStoreUseCase } from './use-cases/store-user/add-user-to-store.use-case';
+import { BulkAddUsersToStoreUseCase } from './use-cases/store-user/bulk-add-users-to-store.use-case';
 import { GetStoreUsersUseCase, GetUserStoresUseCase, GetPrimaryUserByStoreUseCase } from './use-cases/store-user/get-store-users.use-case';
+import { GetStoreUsersWithInfoUseCase } from './use-cases/store-user/get-store-users-with-info.use-case';
 import { RemoveUserFromStoreUseCase, SetPrimaryUserUseCase } from './use-cases/store-user/remove-user-from-store.use-case';
 
 @Module({
@@ -61,7 +63,9 @@ import { RemoveUserFromStoreUseCase, SetPrimaryUserUseCase } from './use-cases/s
     
     // Store-User Use Cases
     AddUserToStoreUseCase,
+    BulkAddUsersToStoreUseCase,
     GetStoreUsersUseCase,
+    GetStoreUsersWithInfoUseCase,
     GetUserStoresUseCase,
     GetPrimaryUserByStoreUseCase,
     RemoveUserFromStoreUseCase,
@@ -92,7 +96,9 @@ import { RemoveUserFromStoreUseCase, SetPrimaryUserUseCase } from './use-cases/s
     UpdateTableUseCase,
     DeleteTableUseCase,
     AddUserToStoreUseCase,
+    BulkAddUsersToStoreUseCase,
     GetStoreUsersUseCase,
+    GetStoreUsersWithInfoUseCase,
     GetUserStoresUseCase,
     GetPrimaryUserByStoreUseCase,
     RemoveUserFromStoreUseCase,
